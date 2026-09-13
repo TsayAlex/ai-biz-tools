@@ -21,7 +21,10 @@ export const metadata = {
       "Independent, practical AI software discovery for small businesses.",
     url: "/"
   },
-  robots: { index: true, follow: true }
+  robots: { index: true, follow: true },
+  other: {
+  "impact-site-verification": "765e5f49-a504-4504-a4d6-a94631cdb4d0",
+}
 };
 
 export default function RootLayout({ children }) {
