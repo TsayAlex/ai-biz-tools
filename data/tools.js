@@ -190,7 +190,22 @@ export const tools = [
     website:"https://companycam.com/",
     pricingNote:"Verified Sep 2026: CompanyCam offers a trial and AI features on select plans; unlimited AI is promoted on its Scale plan. Verify current plan pricing before purchase.",
     verdict:"Especially useful for contractors whose biggest admin burden is documenting jobs, producing updates and organizing field photos."
-  }
+  },
+  {
+  slug:"elevenlabs",
+  name:"ElevenLabs",
+  category:"Content Creation",
+  score:4.7,
+  professions:["Agencies","Ecommerce","Consultants","Local Businesses"],
+  best:"AI voice generation & text-to-speech",
+  description:"AI voice platform for generating natural-sounding speech, voiceovers and audio content from text.",
+  useCases:["Create marketing voiceovers","Turn written content into audio","Produce narration for videos","Generate multilingual speech"],
+  pros:["Natural-sounding AI voices","Useful for video and audio content","Supports multiple languages"],
+  cons:["Not every small business needs AI voice generation","Usage limits depend on the selected plan"],
+  website:"https://try.elevenlabs.io/d40ov9pmbed3",
+  pricingNote:"Check ElevenLabs' current pricing page for the latest plans and usage limits.",
+  verdict:"A strong option for small businesses and creators that regularly need professional-sounding voiceovers and audio content."
+},
 
 ];
 
