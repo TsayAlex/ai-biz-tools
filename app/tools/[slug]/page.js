@@ -55,6 +55,11 @@ export default function ToolPage({ params }) {
             <Link className="secondary big" href="/methodology">How we evaluate tools</Link>
           </div>
           <p className="microcopy">Check current vendor pricing and plan limits before purchase.</p>
+          {tool.slug === "elevenlabs" && (
+  <p className="microcopy">
+    Affiliate disclosure: AI Biz Tools is an independent ElevenLabs affiliate and may earn a commission if you purchase through this link, at no extra cost to you.
+  </p>
+)}
         </div>
         <div className="rating-box">
           <span>EDITORIAL SCORE</span>
