@@ -56,10 +56,15 @@ export default function ToolPage({ params }) {
           </div>
           <p className="microcopy">Check current vendor pricing and plan limits before purchase.</p>
           {tool.slug === "elevenlabs" && (
-  <p className="microcopy">
-    Affiliate disclosure: AI Biz Tools is an independent ElevenLabs affiliate and may earn a commission if you purchase through this link, at no extra cost to you.
-  </p>
-)}
+            <p className="microcopy">
+              Affiliate disclosure: AI Biz Tools is an independent ElevenLabs affiliate and may earn a commission if you purchase through this link, at no extra cost to you.
+            </p>
+          )}
+          {tool.slug === "krisp" && (
+            <p className="microcopy">
+              Affiliate disclosure: AI Biz Tools is an independent Krisp affiliate and may earn a commission if you make a purchase through this link, at no additional cost to you.
+            </p>
+          )}
         </div>
         <div className="rating-box">
           <span>EDITORIAL SCORE</span>
