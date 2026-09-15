@@ -206,6 +206,18 @@ export const tools = [
   pricingNote:"Check ElevenLabs' current pricing page for the latest plans and usage limits.",
   verdict:"A strong option for small businesses and creators that regularly need professional-sounding voiceovers and audio content."
 },
+  {
+    slug:"krisp", name:"Krisp", category:"Productivity", score:4.7,
+    professions:["Agencies","Consultants","Local Businesses","Ecommerce"],
+    best:"AI noise cancellation",
+    description:"Krisp is an AI-powered meeting assistant that removes background noise, transcribes meetings, and helps professionals capture important conversation details during online calls.",
+    useCases:["Remove background noise and echo from business calls","Transcribe online meetings and conversations","Generate AI meeting notes and summaries","Improve call quality for remote teams and client meetings"],
+    pros:["AI-powered noise and echo cancellation","Works with popular meeting and communication apps","Meeting transcription and AI notes","Useful for remote teams, consultants, sales calls, and customer support"],
+    cons:["Some advanced features require a paid plan","Best suited to users who regularly make online calls"],
+    website:"https://krisp.pxf.io/7XVrWr",
+    pricingNote:"Free plan available; paid plans offer additional AI meeting and productivity features.",
+    verdict:"A strong choice for small businesses and professionals who want clearer online calls, automatic transcription, and AI-powered meeting notes."
+  },
 
 ];
 
