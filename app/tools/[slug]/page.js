@@ -65,6 +65,11 @@ export default function ToolPage({ params }) {
               Affiliate disclosure: AI Biz Tools is an independent Krisp affiliate and may earn a commission if you make a purchase through this link, at no additional cost to you.
             </p>
           )}
+          {tool.slug === "quoteiq" && (
+  <p className="microcopy">
+    Affiliate disclosure: AI Biz Tools is an independent QuoteIQ affiliate and may earn a commission if you purchase through our link, at no additional cost to you.
+  </p>
+)}
         </div>
         <div className="rating-box">
           <span>EDITORIAL SCORE</span>

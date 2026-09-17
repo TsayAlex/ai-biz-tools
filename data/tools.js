@@ -163,7 +163,7 @@ export const tools = [
     useCases:["Create draft estimates","Turn job details into quote structure","Manage customer and job records","Use AI-assisted field-service workflows"],
     pros:["Contractor-specific workflow","AI estimating is part of the product","Multiple plan levels for small to larger teams"],
     cons:["AI usage is credit-based","Generated estimates still require human verification of prices, scope and local conditions"],
-    website:"https://myquoteiq.com/",
+    website:"https://admin-quoteiq.web.app/register?via=oleksii",
     pricingNote:"Verified Sep 2026: QuoteIQ lists Essentials at $29.99/month with 500 AI credits; higher tiers increase users, features and credit allowances.",
     verdict:"Worth testing for contractors who want AI closer to quoting and estimating rather than a general-purpose writing assistant."
   },
