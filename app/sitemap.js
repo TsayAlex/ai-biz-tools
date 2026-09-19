@@ -4,7 +4,7 @@ import { siteConfig } from "../lib/site";
 
 export default function sitemap() {
   const base = siteConfig.url.replace(/\/$/, "");
-  return [
+  const entries = [
     { url: base, changeFrequency:"weekly", priority:1 },
     { url: `${base}/guides`, changeFrequency:"weekly", priority:.7 },
     { url: `${base}/best/best-ai-tools-for-contractors`, changeFrequency:"monthly", priority:1 },
@@ -24,4 +24,13 @@ export default function sitemap() {
     ...comparisons.map(x=>({url:`${base}/compare/${x.slug}`,changeFrequency:"monthly",priority:.8})),
     ...seoPages.map(x=>({url:`${base}/best/${x.slug}`,changeFrequency:"monthly",priority:.9}))
   ];
+
+  const seen = new Map();
+  for (const entry of entries) {
+    if (!seen.has(entry.url)) {
+      seen.set(entry.url, entry);
+    }
+  }
+
+  return [...seen.values()];
 }
