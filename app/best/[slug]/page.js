@@ -22,6 +22,7 @@ export default function SeoLanding({ params }) {
   const page = getSeoPage(params.slug);
   if (!page) notFound();
 
+  const relatedPages = seoPages.filter(({ slug }) => slug !== page.slug).slice(0, 6);
   const selected = page.tools.map(getTool).filter(Boolean);
   const base = siteConfig.url.replace(/\/$/,"");
   const schema = {
@@ -96,6 +97,18 @@ export default function SeoLanding({ params }) {
             {page.keywords.map(k => <span className="pill" key={k}>{k}</span>)}
           </div>
         </article>
+      </section>
+
+      <section className="section compact">
+        <span className="eyebrow">RELATED GUIDES</span>
+        <h2>Related AI tool guides</h2>
+        <div className="grid">
+          {relatedPages.map((relatedPage) => (
+            <article className="card" key={relatedPage.slug}>
+              <Link className="secondary center" href={`/best/${relatedPage.slug}`}>{relatedPage.title}</Link>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="notice">
