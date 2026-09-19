@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { seoPages } from "../../../data/seoPages";
 import { getTool } from "../../../data/tools";
 import { siteConfig } from "../../../lib/site";
 
@@ -39,6 +40,7 @@ export const metadata = {
 
 export default function ContractorsGuide() {
   const selected = picks.map(x => ({...x, tool:getTool(x.slug)})).filter(x=>x.tool);
+  const relatedPages = seoPages.filter(page => page.slug !== "best-ai-tools-for-contractors").slice(0, 6);
   const base = siteConfig.url.replace(/\/$/,"");
   const schema = {
     "@context":"https://schema.org",
@@ -147,6 +149,18 @@ export default function ContractorsGuide() {
 
       <section className="notice">
         <b>Editorial policy:</b> Rankings are based on workflow fit, not commissions. We do not claim hands-on testing where it has not occurred. Vendor facts were checked against official sources in September 2026. <Link href="/methodology">Methodology →</Link>
+      </section>
+
+      <section className="section compact">
+        <span className="eyebrow">RELATED GUIDES</span>
+        <h2>Related AI tool guides</h2>
+        <div className="grid">
+          {relatedPages.map((relatedPage) => (
+            <article className="card" key={relatedPage.slug}>
+              <Link className="secondary center" href={`/best/${relatedPage.slug}`}>{relatedPage.title}</Link>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="final-cta">
