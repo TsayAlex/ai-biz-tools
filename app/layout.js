@@ -1,5 +1,6 @@
 import "./globals.css";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { siteConfig } from "../lib/site";
@@ -50,6 +51,8 @@ export default function RootLayout({ children }) {
             gtag('config', 'G-P8HHK6KM9J');
           `}
         </Script>
+
+        <Analytics />
       </body>
     </html>
   );
