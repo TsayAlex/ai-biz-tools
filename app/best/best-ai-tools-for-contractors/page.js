@@ -4,27 +4,39 @@ import { getTool } from "../../../data/tools";
 import { siteConfig } from "../../../lib/site";
 
 const picks = [
-  { slug:"jobber", label:"Best for scheduling + missed calls" },
-  { slug:"quoteiq", label:"Best for AI-assisted estimating" },
-  { slug:"chatgpt", label:"Best flexible assistant" },
-  { slug:"companycam", label:"Best for job-site documentation" },
-  { slug:"housecall-pro", label:"Best all-in-one field-service option" },
-  { slug:"canva", label:"Best for local marketing visuals" }
+  { slug:"jobber", label:"Best for missed calls and scheduling", useCase:"Capture inbound leads, book work, and keep the office from losing jobs while crews are on site." },
+  { slug:"quoteiq", label:"Best for AI-assisted estimating", useCase:"Draft quote structure and scope language faster while keeping human approval on final pricing." },
+  { slug:"chatgpt", label:"Best flexible assistant", useCase:"Write follow-ups, summarize notes, create proposals, and turn rough job details into polished customer communication." },
+  { slug:"companycam", label:"Best for job-site documentation", useCase:"Turn photos, notes and field context into recaps, reports and checklists your team can actually use." },
+  { slug:"housecall-pro", label:"Best all-in-one field-service option", useCase:"Run scheduling, dispatch and customer communication from one operational workflow." },
+  { slug:"canva", label:"Best for local marketing visuals", useCase:"Create before/after graphics, seasonal promos, service-area social posts and branded offers without a designer." }
 ];
 
 const workflowRows = [
-  ["Missed calls & booking", "Jobber / Housecall Pro", "Capture leads when you cannot answer the phone"],
-  ["Estimates & quote prep", "QuoteIQ + human review", "Speed up drafting without trusting AI with final numbers"],
-  ["Scopes, emails & follow-up", "ChatGPT", "Turn rough notes into clear customer-facing drafts"],
-  ["Job-site documentation", "CompanyCam", "Create recaps, reports and checklists from field context"],
-  ["Local marketing", "Canva", "Create before/after graphics, promos and reusable templates"]
+  ["Missed calls & lead capture", "Jobber / Housecall Pro", "Handle inquiries while you are on the road and reduce lost leads from unanswered calls."],
+  ["Scheduling & dispatch", "Jobber / Housecall Pro", "Coordinate crew calendars, service windows and follow-up without losing track in text threads."],
+  ["Estimates & quotes", "QuoteIQ + human review", "Draft scopes and pricing faster, but keep a human final check on labor, materials and local conditions."],
+  ["Field documentation", "CompanyCam", "Create photo-based job recaps, daily logs and customer-ready updates from the field."],
+  ["Customer communication", "ChatGPT + contractor software", "Turn rough notes into polite follow-ups, reminder texts and proposal drafts without starting from scratch."],
+  ["Admin & content work", "ChatGPT / Canva", "Handle repetitive writing, marketing assets and operational content without adding another full-time hire."],
+  ["Local marketing", "Canva", "Create simple service promotions, social posts and before-and-after graphics that fit a local contractor brand." ]
+];
+
+const selectionCriteria = [
+  ["Estimating & quotes", "A tool should help draft scope, line items and customer communication without replacing human review on final pricing."],
+  ["Missed calls & lead capture", "The best option reduces lost jobs from unanswered calls and texts during active fieldwork."],
+  ["Scheduling", "The workflow should reduce back-and-forth about window times, crew availability and route planning."],
+  ["Field documentation", "The software should make it easier to capture photos, notes and job status without a cluttered paper trail."],
+  ["Customer communication", "Look for tools that create faster responses, clearer follow-ups and fewer dropped tasks."],
+  ["Admin & content work", "AI is most valuable when it saves time on writing, repetitive updates, proposals and local marketing material." ]
 ];
 
 const faqs = [
-  ["What is the best AI tool for a small contractor?", "There is no universal winner. If missed calls and scheduling are the problem, start with a field-service platform such as Jobber or Housecall Pro. If quote preparation is the bottleneck, test QuoteIQ. If you mainly need writing, summaries and customer communication, a general assistant such as ChatGPT may be enough."],
-  ["Can AI create contractor estimates automatically?", "AI can help draft estimate structure and scope, but final prices, quantities, labor assumptions, exclusions, taxes and local conditions still need human verification. Treat AI output as a draft, not an approved quote."],
-  ["Should contractors use ChatGPT or contractor-specific software?", "Use a general assistant for flexible writing, research and admin. Use contractor-specific software when the workflow depends on scheduling, job records, estimating, dispatch, photos or customer calls."],
-  ["How many AI tools should a contractor buy?", "Usually fewer than software lists suggest. Start with one expensive or repetitive workflow, test one tool, measure the result, and only add another subscription if it solves a different problem."]
+  ["What is the best AI tool for a small contractor?", "There is no single winner. If missed calls and scheduling are the biggest problem, start with a field-service platform such as Jobber or Housecall Pro. If estimating is the bottleneck, test QuoteIQ. If you mainly need writing, summaries and customer communication, a general assistant such as ChatGPT may be enough."],
+  ["Can AI create contractor estimates automatically?", "AI can help draft estimate structure, scope language and customer-facing summaries, but labor assumptions, quantities, exclusions, taxes and local job conditions still need a human check. Treat AI output as a draft, not an approved quote."],
+  ["Should contractors use ChatGPT or contractor-specific software?", "Use a general assistant for flexible writing, research and admin. Use contractor-specific software when the workflow depends on dispatch, scheduling, quoting, field photography, job records or customer calls."],
+  ["How many AI tools should a contractor buy?", "Usually fewer than software lists suggest. Start with the workflow that costs the most time or loses the most jobs, test one tool on real work, and only add another subscription if it solves a different problem."],
+  ["How do I choose between all-in-one field service software and a smaller AI tool?", "Choose the integrated platform when your main pain is operations across scheduling, dispatch, calls and customer communication. Choose a narrower tool when one workflow, such as estimating or marketing, is the main issue and your current system is already handling the rest." ]
 ];
 
 export const metadata = {
@@ -70,7 +82,7 @@ export default function ContractorsGuide() {
       <section className="business-hero contractor-hero">
         <span className="eyebrow">CONTRACTOR BUYER'S GUIDE • UPDATED SEPTEMBER 2026</span>
         <h1>Best AI Tools for Contractors in 2026</h1>
-        <p>For contractors, the useful AI is not the flashiest chatbot. It is software that reduces missed calls, quote admin, scheduling friction, documentation and repetitive customer communication.</p>
+        <p>For contractors, the most useful AI tools are the ones that reduce missed calls, shorten quote prep, organize scheduling, and keep job-site communication from turning into admin chaos. This guide focuses on the workflows that hurt cash flow and customer response time the most.</p>
         <div className="hero-actions">
           <a className="primary" href="#shortlist">See the shortlist ↓</a>
           <Link className="secondary" href="/#finder">Use the free tool finder</Link>
@@ -78,7 +90,7 @@ export default function ContractorsGuide() {
       </section>
 
       <section className="notice">
-        <b>Quick answer:</b> Start with the bottleneck. Jobber and Housecall Pro are strong when operations and calls are the issue; QuoteIQ is more directly focused on AI-assisted estimating; CompanyCam fits documentation-heavy work; ChatGPT remains useful for flexible writing and admin. Pricing and features can change, so verify the vendor page before purchase.
+        <b>Short answer:</b> Start with the workflow that is costing you the most money or time. If inbound calls and scheduling are the real problem, start with Jobber or Housecall Pro. If quote creation is the bottleneck, test QuoteIQ. If you mostly need writing, summaries and customer communication, ChatGPT is a flexible starting point. Use AI to speed up the work, not to replace a human final check on pricing, safety or job scope.
       </section>
 
       <section className="section compact" id="shortlist">
@@ -86,11 +98,11 @@ export default function ContractorsGuide() {
         <h2>6 tools worth evaluating first</h2>
         <div className="guide-table-wrap">
           <table className="guide-table">
-            <thead><tr><th>#</th><th>Tool</th><th>Best for</th><th>Category</th><th>Editorial score</th><th></th></tr></thead>
+            <thead><tr><th>#</th><th>Tool</th><th>Best for</th><th>Use case</th><th>Category</th><th>Editorial score</th><th></th></tr></thead>
             <tbody>
               {selected.map((x,i)=>(
                 <tr key={x.slug}>
-                  <td>{i+1}</td><td><strong>{x.tool.name}</strong></td><td>{x.label}</td><td>{x.tool.category}</td><td>★ {x.tool.score}</td>
+                  <td>{i+1}</td><td><strong>{x.tool.name}</strong></td><td>{x.label}</td><td>{x.useCase}</td><td>{x.tool.category}</td><td>★ {x.tool.score}</td>
                   <td><Link href={`/tools/${x.slug}`}>Review →</Link></td>
                 </tr>
               ))}
@@ -100,45 +112,63 @@ export default function ContractorsGuide() {
       </section>
 
       <section className="section compact">
-        <span className="eyebrow">START WITH THE JOB, NOT THE APP</span>
-        <h2>Match the tool to the workflow</h2>
+        <span className="eyebrow">START WITH THE WORKFLOW</span>
+        <h2>Which tool fits which contractor job?</h2>
         <div className="guide-table-wrap">
           <table className="guide-table">
-            <thead><tr><th>Workflow</th><th>Good starting option</th><th>Why</th></tr></thead>
+            <thead><tr><th>Workflow</th><th>Good starting option</th><th>Why it fits</th></tr></thead>
             <tbody>{workflowRows.map(row=><tr key={row[0]}>{row.map((c,i)=><td key={c}>{i===0?<strong>{c}</strong>:c}</td>)}</tr>)}</tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="section compact">
+        <span className="eyebrow">SELECTION CRITERIA</span>
+        <h2>What to compare before buying</h2>
+        <div className="guide-table-wrap">
+          <table className="guide-table">
+            <thead><tr><th>Decision point</th><th>What to look for</th></tr></thead>
+            <tbody>
+              {selectionCriteria.map(([title, text]) => (
+                <tr key={title}><td><strong>{title}</strong></td><td>{text}</td></tr>
+              ))}
+            </tbody>
           </table>
         </div>
       </section>
 
       <section className="content-grid">
         <article className="content-card">
-          <h2>What AI should not decide for you</h2>
+          <h2>Where AI adds the most value</h2>
+          <ul>
+            <li>Turning rough notes into clear customer follow-ups.</li>
+            <li>Summarizing call notes and job updates without another spreadsheet.</li>
+            <li>Generating estimate drafts or scope summaries faster.</li>
+            <li>Creating local offers and before/after graphics for recurring marketing needs.</li>
+          </ul>
+        </article>
+        <article className="content-card">
+          <h2>Where AI should not be trusted alone</h2>
           <ul>
             <li>Final labor and material pricing.</li>
             <li>Code, permit or safety compliance.</li>
             <li>Contract language without professional review.</li>
-            <li>Whether a customer issue needs a human response.</li>
+            <li>Whether a customer issue truly requires a human response.</li>
           </ul>
-        </article>
-        <article className="content-card">
-          <h2>A simple 14-day test</h2>
-          <ol>
-            <li>Choose one workflow that wastes time or loses leads.</li>
-            <li>Record the current time, errors or missed opportunities.</li>
-            <li>Test one tool on real jobs for two weeks.</li>
-            <li>Keep it only if the workflow improves enough to justify cost and setup.</li>
-          </ol>
         </article>
       </section>
 
       <section className="section compact">
-        <span className="eyebrow">WHY THESE CATEGORIES</span>
-        <h2>What current contractor software is actually doing with AI</h2>
+        <span className="eyebrow">HOW WE CHOSE THESE TOOLS</span>
+        <h2>We prioritize workflow fit, not hype</h2>
         <div className="grid">
-          <article className="content-card"><h3>Calls & booking</h3><p>Jobber's official documentation describes an AI Receptionist that can answer inquiries and help book work. Housecall Pro also offers AI teammates and an optional CSR AI for calls.</p></article>
-          <article className="content-card"><h3>Estimating</h3><p>QuoteIQ markets an AI Estimator and AI CoPilot inside its contractor workflow. That makes it more relevant to estimating than a generic writing tool, but final quote numbers still need verification.</p></article>
-          <article className="content-card"><h3>Field documentation</h3><p>CompanyCam's AI features turn project photos, descriptions and voice context into summaries, daily logs, recaps and checklists.</p></article>
+          <article className="content-card"><h3>Business fit</h3><p>We emphasize tools that solve a recurring contractor problem such as quoting, calls, scheduling, job documentation, customer communication or local marketing.</p></article>
+          <article className="content-card"><h3>Ease of adoption</h3><p>A tool is more valuable if a small business can put it to work without large implementation overhead or a huge learning curve.</p></article>
+          <article className="content-card"><h3>Workflow value</h3><p>We favor tools that reduce wasted time, missed leads or repetitive admin, because those are the easiest gains to justify for a contractor.</p></article>
         </div>
+        <p style={{marginTop:"1rem"}}>
+          Our evaluation is aligned with the project <Link href="/methodology">methodology</Link>: a strong product should solve a real operational problem, be reasonably adoptable, and still require human review where the stakes are high.
+        </p>
       </section>
 
       <section className="section compact">
