@@ -58,6 +58,26 @@ export const seoPages = [
     "intro": "Contractors usually need AI to speed up the estimation workflow without sacrificing price accuracy, scope clarity or human review."
   },
   {
+    "slug": "best-ai-tools-for-contractor-scheduling",
+    "title": "Best AI Tools for Contractor Scheduling and Appointment Management",
+    "audience": "contractors and small field-service businesses managing appointments, crew windows and missed-call follow-up",
+    "problem": "booking jobs, reducing missed appointments, coordinating crews and keeping scheduling logistics organized",
+    "keywords": [
+      "AI tools for contractor scheduling",
+      "best AI scheduling software for contractors",
+      "AI appointment management for contractors"
+    ],
+    "tools": [
+      "jobber",
+      "housecall-pro",
+      "chatgpt",
+      "quoteiq",
+      "companycam",
+      "canva"
+    ],
+    "intro": "Scheduling is often the job that turns a contractor business from busy to chaotic. AI helps reduce missed bookings, speed up confirmation messages and simplify crew coordination."
+  },
+  {
     "slug": "best-ai-tools-for-restaurants",
     "title": "Best AI Tools for Restaurants",
     "audience": "restaurant owners and small hospitality teams",
