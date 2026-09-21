@@ -78,6 +78,26 @@ export const seoPages = [
     "intro": "Scheduling is often the job that turns a contractor business from busy to chaotic. AI helps reduce missed bookings, speed up confirmation messages and simplify crew coordination."
   },
   {
+    "slug": "best-ai-tools-for-contractor-customer-communication",
+    "title": "Best AI Tools for Contractor Customer Communication",
+    "audience": "contractors and small field-service businesses managing customer messages, follow-ups and updates",
+    "problem": "replying to inquiries quickly, writing follow-ups, confirming appointments, and keeping jobs and customers moving without manual back-and-forth",
+    "keywords": [
+      "AI tools for contractor customer communication",
+      "best AI communication tools for contractors",
+      "contractor customer messaging software"
+    ],
+    "tools": [
+      "jobber",
+      "housecall-pro",
+      "chatgpt",
+      "quoteiq",
+      "companycam",
+      "canva"
+    ],
+    "intro": "The best contractor communication tools help the office respond faster, track follow-ups, and keep customers informed without creating extra admin work."
+  },
+  {
     "slug": "best-ai-tools-for-restaurants",
     "title": "Best AI Tools for Restaurants",
     "audience": "restaurant owners and small hospitality teams",
