@@ -38,6 +38,26 @@ export const seoPages = [
     "intro": "For contractors, the useful AI question is not “what is the smartest chatbot?” It is “which tool reduces missed leads, slow quotes or repetitive office work?”"
   },
   {
+    "slug": "best-ai-tools-for-contractor-estimating-and-quoting",
+    "title": "Best AI Tools for Contractor Estimating and Quoting",
+    "audience": "contractors and small field-service businesses focused on quote creation and job estimates",
+    "problem": "drafting estimates, cleaning up rough job notes, preparing customer-facing quotes and reducing quote admin",
+    "keywords": [
+      "AI tools for contractor estimating",
+      "best AI for contractor quotes",
+      "AI estimating software for contractors"
+    ],
+    "tools": [
+      "quoteiq",
+      "chatgpt",
+      "jobber",
+      "housecall-pro",
+      "companycam",
+      "canva"
+    ],
+    "intro": "Contractors usually need AI to speed up the estimation workflow without sacrificing price accuracy, scope clarity or human review."
+  },
+  {
     "slug": "best-ai-tools-for-restaurants",
     "title": "Best AI Tools for Restaurants",
     "audience": "restaurant owners and small hospitality teams",
