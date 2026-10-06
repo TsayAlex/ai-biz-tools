@@ -9,19 +9,34 @@ const ACADEMY_ARRIVAL_PREFIX = "aibiztools:academy-arrival:";
 
 function academyLandingParams() {
   if (typeof window === "undefined") return null;
-  const params = new URLSearchParams(window.location.search);
-  const source = params.get("utm_source") || "";
-  if (!(source === "academy_final_r1" || source === "alex_ai_academy" || source.startsWith("academy_"))) return null;
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const hashQuery = window.location.hash.includes("?")
+    ? window.location.hash.slice(window.location.hash.indexOf("?") + 1)
+    : "";
+  const hashParams = new URLSearchParams(hashQuery);
+
+  const read = (name) => searchParams.get(name) || hashParams.get(name) || "";
+  const has = (name) => searchParams.has(name) || hashParams.has(name);
+
+  let referrerDomain = "";
+  try { referrerDomain = document.referrer ? new URL(document.referrer).hostname : ""; } catch {}
+
+  let source = read("utm_source");
+  const academyReferrer = referrerDomain === "grand-florentine-193409.netlify.app";
+  const academySource = source === "academy_final_r1" || source === "alex_ai_academy" || source.startsWith("academy_");
+
+  if (!academySource && !academyReferrer) return null;
+  if (!source && academyReferrer) source = "academy_referrer";
+
   return {
     source,
-    medium: params.get("utm_medium") || "",
-    campaign: params.get("utm_campaign") || "",
-    content: params.get("utm_content") || "",
-    linker_present: params.has("_gl") ? 1 : 0,
-    referrer_domain: (() => {
-      try { return document.referrer ? new URL(document.referrer).hostname : ""; }
-      catch { return ""; }
-    })()
+    medium: read("utm_medium"),
+    campaign: read("utm_campaign"),
+    content: read("utm_content"),
+    linker_present: has("_gl") ? 1 : 0,
+    referrer_domain: referrerDomain,
+    handoff_format: window.location.search ? "query" : (hashQuery ? "hash_query" : "referrer")
   };
 }
 
@@ -64,12 +79,18 @@ export default function AnalyticsConsent() {
     const landing = academyLandingParams();
     if (!landing) return;
 
-    const marker = ACADEMY_ARRIVAL_PREFIX + window.location.pathname + window.location.search;
+    const marker = ACADEMY_ARRIVAL_PREFIX + window.location.pathname + window.location.search + window.location.hash;
     let alreadySent = false;
     try { alreadySent = window.sessionStorage.getItem(marker) === "1"; } catch {}
     if (alreadySent || window.__aibiztoolsAcademyArrival === marker) return;
 
     if (track("academy_arrival", landing)) {
+      track(landing.linker_present ? "academy_arrival_linked" : "academy_arrival_unlinked", {
+        source: landing.source,
+        medium: landing.medium,
+        campaign: landing.campaign,
+        handoff_format: landing.handoff_format
+      });
       window.__aibiztoolsAcademyArrival = marker;
       try { window.sessionStorage.setItem(marker, "1"); } catch {}
     }
