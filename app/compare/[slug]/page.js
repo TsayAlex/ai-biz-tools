@@ -1,3 +1,4 @@
+import VendorLink from "../../../components/VendorLink";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { comparisons, getComparison, getTool } from "../../../data/tools";
@@ -40,7 +41,7 @@ export default function ComparePage({ params }) {
             <ul>{tool.pros.slice(0,2).map(x=><li key={x}>{x}</li>)}</ul>
             <div className="card-actions">
               <Link className="secondary center" href={`/tools/${tool.slug}`}>Full review</Link>
-              <a className="primary center" href={tool.website} target="_blank" rel="nofollow sponsored noopener">Official site ↗</a>
+              <VendorLink className="primary center" href={tool.website} tool={tool.slug} source="comparison">Official site ↗</VendorLink>
             </div>
           </article>
         ))}

@@ -1,6 +1,8 @@
 "use client";
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import VendorLink from "./VendorLink";
+import { track } from "../lib/analytics";
 import { tools } from "../data/tools";
 
 const categories = ["All", ...Array.from(new Set(tools.map(x => x.category)))];
@@ -53,8 +55,8 @@ export default function ToolExplorer() {
               <div><dt>Pricing</dt><dd>Check current</dd></div>
             </dl>
             <div className="card-actions">
-              <Link className="secondary center" href={`/tools/${tool.slug}`}>Read review</Link>
-              <a className="primary center" href={tool.website} target="_blank" rel="nofollow noopener">Official site ↗</a>
+              <Link className="secondary center" href={`/tools/${tool.slug}`} onClick={() => track("review_clicked", { tool: tool.slug, source: "directory", href: `/tools/${tool.slug}` })}>Read review</Link>
+              <VendorLink className="primary center" href={tool.website} tool={tool.slug} source="directory" rel="nofollow noopener">Official site ↗</VendorLink>
             </div>
           </article>
         ))}

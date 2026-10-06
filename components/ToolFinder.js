@@ -116,7 +116,7 @@ export default function ToolFinder() {
     e.preventDefault();
     if (ready) {
       setShowResults(true);
-      track("finder_completed", { business, task, budget, results: results.map(x=>x.slug) });
+      track("finder_completed", { business, task, budget, source: "finder", tool: results.map(x=>x.slug).join(","), results: results.map(x=>x.slug).join(",") });
     }
   }
 
@@ -200,7 +200,7 @@ export default function ToolFinder() {
                     <span>Best for: {tool.best}</span>
                   </div>
                 </div>
-                <Link className="secondary finder-review" href={`/tools/${tool.slug}`} onClick={()=>track("review_clicked",{source:"finder",tool:tool.slug,business,task})}>See review →</Link>
+                <Link className="secondary finder-review" href={`/tools/${tool.slug}`} onClick={()=>track("review_clicked",{source:"finder",tool:tool.slug,href:`/tools/${tool.slug}`,business,task})}>See review →</Link>
               </article>
             ))}
           </div>
