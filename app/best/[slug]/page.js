@@ -1,3 +1,4 @@
+import VendorLink from "../../../components/VendorLink";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { seoPages, getSeoPage } from "../../../data/seoPages";
@@ -73,7 +74,7 @@ export default function SeoLanding({ params }) {
               <p><b>Best for:</b> {tool.best}</p>
               <div className="card-actions">
                 <Link className="secondary center" href={`/tools/${tool.slug}`}>Full review</Link>
-                <a className="primary center" href={tool.website} target="_blank" rel="nofollow noopener">Official site ↗</a>
+                <VendorLink className="primary center" href={tool.website} tool={tool.slug} source="buyer_guide" rel="nofollow noopener">Official site ↗</VendorLink>
               </div>
             </article>
           ))}
