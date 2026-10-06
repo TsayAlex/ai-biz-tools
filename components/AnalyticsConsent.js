@@ -5,6 +5,26 @@ import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { applyConsent, getSavedConsent, track, GA_MEASUREMENT_ID, CONSENT_STORAGE_KEY, CONSENT_CHANGED_EVENT } from "../lib/analytics";
 
+const ACADEMY_ARRIVAL_PREFIX = "aibiztools:academy-arrival:";
+
+function academyLandingParams() {
+  if (typeof window === "undefined") return null;
+  const params = new URLSearchParams(window.location.search);
+  const source = params.get("utm_source") || "";
+  if (!(source === "academy_final_r1" || source === "alex_ai_academy" || source.startsWith("academy_"))) return null;
+  return {
+    source,
+    medium: params.get("utm_medium") || "",
+    campaign: params.get("utm_campaign") || "",
+    content: params.get("utm_content") || "",
+    linker_present: params.has("_gl") ? 1 : 0,
+    referrer_domain: (() => {
+      try { return document.referrer ? new URL(document.referrer).hostname : ""; }
+      catch { return ""; }
+    })()
+  };
+}
+
 export default function AnalyticsConsent() {
   const [choice, setChoice] = useState(null);
   const [loadGoogle, setLoadGoogle] = useState(false);
@@ -33,10 +53,26 @@ export default function AnalyticsConsent() {
   }, []);
 
   useEffect(() => {
-    if (choice === "granted") track("page_view", {
+    if (choice !== "granted") return;
+
+    track("page_view", {
       page_location: window.location.origin + pathname,
-      page_title: document.title, source: "navigation"
+      page_title: document.title,
+      source: "navigation"
     });
+
+    const landing = academyLandingParams();
+    if (!landing) return;
+
+    const marker = ACADEMY_ARRIVAL_PREFIX + window.location.pathname + window.location.search;
+    let alreadySent = false;
+    try { alreadySent = window.sessionStorage.getItem(marker) === "1"; } catch {}
+    if (alreadySent || window.__aibiztoolsAcademyArrival === marker) return;
+
+    if (track("academy_arrival", landing)) {
+      window.__aibiztoolsAcademyArrival = marker;
+      try { window.sessionStorage.setItem(marker, "1"); } catch {}
+    }
   }, [choice, pathname]);
 
   function choose(next) {

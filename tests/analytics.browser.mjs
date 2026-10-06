@@ -55,6 +55,22 @@ for (const [tool, href] of [['elevenlabs', 'https://try.elevenlabs.io/d40ov9pmbe
   assert.equal(event[2].href, href);
   assert.equal(event[2].source, 'tool_review');
 }
+// Academy hand-off attribution: capture UTM values and whether Google decorated the URL with _gl.
+await page.goto(base + '/?utm_source=academy_final_r1&utm_medium=mission&utm_campaign=academy&utm_content=chatgpt&_gl=1*test#explore');
+await page.waitForFunction(() => window.__aibiztoolsAnalyticsConsent === 'granted');
+await page.waitForTimeout(150);
+let arrivals = await events('academy_arrival');
+assert.equal(arrivals.length, 1);
+assert.equal(arrivals[0][2].source, 'academy_final_r1');
+assert.equal(arrivals[0][2].medium, 'mission');
+assert.equal(arrivals[0][2].campaign, 'academy');
+assert.equal(arrivals[0][2].content, 'chatgpt');
+assert.equal(arrivals[0][2].linker_present, 1);
+await page.reload();
+await page.waitForFunction(() => window.__aibiztoolsAnalyticsConsent === 'granted');
+await page.waitForTimeout(150);
+assert.equal((await events('academy_arrival')).length, 0);
+
 // Another tab revoking consent must update the already-open page without consent events.
 const second = await context.newPage();
 await second.goto(base + '/');
