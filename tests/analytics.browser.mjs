@@ -44,6 +44,17 @@ for(const path of ['/best/best-ai-tools-for-real-estate-agents','/compare/chatgp
 }
 for(const cmd of await queue())if(cmd[0]==='consent')for(const k of ['ad_storage','ad_user_data','ad_personalization'])assert.equal(cmd[2][k],'denied');
 for(const cmd of await queue())if(cmd[0]==='event'){assert.equal(cmd[2].site_product,'ai_biz_tools');assert.equal(cmd[2].send_to,'G-RWBTJRK4H5');}
+// Keep affiliate destinations intact and carry their identifiers into outbound events.
+for (const [tool, href] of [['elevenlabs', 'https://try.elevenlabs.io/d40ov9pmbed3'], ['krisp', 'https://krisp.pxf.io/7XVrWr'], ['quoteiq', 'https://admin-quoteiq.web.app/register?via=oleksii']]) {
+  await page.goto(base + '/tools/' + tool);
+  await page.getByRole('button', { name: 'Test analytics' }).waitFor({ state: 'visible' });
+  await page.waitForFunction(() => window.__aibiztoolsAnalyticsConsent === 'granted');
+  await page.locator('a.primary.big[target=_blank]').first().evaluate(el => { el.addEventListener('click', e => e.preventDefault(), { once: true }); el.click(); });
+  const event = (await events('vendor_clicked')).at(-1);
+  assert.equal(event[2].tool, tool);
+  assert.equal(event[2].href, href);
+  assert.equal(event[2].source, 'tool_review');
+}
 // Another tab revoking consent must update the already-open page without consent events.
 const second = await context.newPage();
 await second.goto(base + '/');
