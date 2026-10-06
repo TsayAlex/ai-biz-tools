@@ -8,6 +8,7 @@ import { applyConsent, getSavedConsent, track, GA_MEASUREMENT_ID, CONSENT_STORAG
 export default function AnalyticsConsent() {
   const [choice, setChoice] = useState(null);
   const [loadGoogle, setLoadGoogle] = useState(false);
+  const [tagStatus, setTagStatus] = useState("not-loaded");
   const [notice, setNotice] = useState("");
   const pathname = usePathname();
 
@@ -16,7 +17,12 @@ export default function AnalyticsConsent() {
       const saved = getSavedConsent();
       applyConsent(saved);
       setChoice(saved);
-      if (saved === "granted") setLoadGoogle(true);
+      if (saved === "granted") {
+        setLoadGoogle(true);
+        setTagStatus("loading");
+      } else {
+        setTagStatus("not-loaded");
+      }
     }
     function sync(event) {
       if (event.key === CONSENT_STORAGE_KEY || event.key === null) restore();
@@ -40,7 +46,10 @@ export default function AnalyticsConsent() {
     applyConsent(next);
     if (next === "granted") {
       setLoadGoogle(true);
+      setTagStatus("loading");
       track("analytics_consent", { choice: next, previous_choice: choice || "unset", source: "consent_ui" });
+    } else {
+      setTagStatus("not-loaded");
     }
     setChoice(next);
     setNotice("");
@@ -53,18 +62,39 @@ export default function AnalyticsConsent() {
   }
 
   return <>
-    {loadGoogle && <Script id="ga4-loader" src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" onError={() => setNotice("Google Analytics could not load. Your browser or network may block it.")} />}
+    {loadGoogle && <Script
+      id="ga4-loader"
+      src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+      strategy="afterInteractive"
+      onLoad={() => {
+        setTagStatus("loaded");
+        setNotice("Google tag loaded. You can send a test event now.");
+      }}
+      onError={() => {
+        setTagStatus("blocked");
+        setNotice("Google tag could not load. A browser extension, privacy setting, DNS filter, or network may be blocking it.");
+      }}
+    />}
     <section className="analytics-consent" aria-label="Analytics preferences">
-      <div className="analytics-consent-heading"><strong aria-live="polite">GA4: {choice === "granted" ? "ON" : "OFF"}</strong><span>Google Analytics is optional. Advertising consent stays off.</span></div>
+      <div className="analytics-consent-heading">
+        <strong aria-live="polite">GA4: {choice === "granted" ? "ON" : "OFF"}</strong>
+        <span>Google Analytics is optional. Advertising consent stays off.</span>
+      </div>
       <div className="analytics-consent-actions">
         <button type="button" className="secondary" aria-pressed={choice === "granted"} onClick={() => choose("granted")}>Allow analytics</button>
         <button type="button" className="secondary" aria-pressed={choice === "denied"} onClick={() => choose("denied")}>Necessary only</button>
         <button type="button" className="secondary" disabled={choice !== "granted"} onClick={() => {
-          if (track("analytics_test", { source: "consent_ui", href: window.location.origin + pathname })) setNotice("analytics_test queued for GA4. Delivery may be blocked by your browser or network.");
+          if (track("analytics_test", {
+            source: "consent_ui",
+            href: window.location.origin + pathname,
+            debug_mode: true
+          })) setNotice("analytics_test queued for GA4 DebugView/Realtime. If it does not appear, check the Google tag status below.");
         }}>Test analytics</button>
         <a href="/privacy">Privacy policy</a>
       </div>
-      <small>GA4 status reflects your consent, not confirmed delivery. Vercel Analytics remains enabled.</small>
+      <small>
+        GA4 status reflects consent. Google tag status: {tagStatus}. Vercel Analytics remains enabled.
+      </small>
       {notice && <p role="status">{notice}</p>}
     </section>
   </>;
