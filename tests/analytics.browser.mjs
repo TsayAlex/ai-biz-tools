@@ -66,10 +66,22 @@ assert.equal(arrivals[0][2].medium, 'mission');
 assert.equal(arrivals[0][2].campaign, 'academy');
 assert.equal(arrivals[0][2].content, 'chatgpt');
 assert.equal(arrivals[0][2].linker_present, 1);
+assert.equal((await events('academy_arrival_linked')).length, 1);
+assert.equal((await events('academy_arrival_unlinked')).length, 0);
 await page.reload();
 await page.waitForFunction(() => window.__aibiztoolsAnalyticsConsent === 'granted');
 await page.waitForTimeout(150);
 assert.equal((await events('academy_arrival')).length, 0);
+
+// Legacy malformed Academy links are still detected when UTM values sit after the hash.
+await page.goto(base + '/#explore?utm_source=academy_final_r1&utm_medium=mission&utm_campaign=academy');
+await page.waitForFunction(() => window.__aibiztoolsAnalyticsConsent === 'granted');
+await page.waitForTimeout(150);
+arrivals = await events('academy_arrival');
+assert.equal(arrivals.length, 1);
+assert.equal(arrivals[0][2].handoff_format, 'hash_query');
+assert.equal(arrivals[0][2].linker_present, 0);
+assert.equal((await events('academy_arrival_unlinked')).length, 1);
 
 // Another tab revoking consent must update the already-open page without consent events.
 const second = await context.newPage();
