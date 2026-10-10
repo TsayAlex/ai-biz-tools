@@ -3,6 +3,12 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
+    // Reject oversized requests before parsing multipart form data.
+    const contentLength = Number(request.headers.get("content-length"));
+    if (Number.isFinite(contentLength) && contentLength > 16 * 1024) {
+      return new NextResponse("Submission is too large.", { status: 413 });
+    }
+
     const formData = await request.formData();
 
     const toolName = String(formData.get("toolName") || "").trim();
@@ -30,13 +36,20 @@ export async function POST(request) {
       );
     }
 
+    // Bound incoming field sizes before invoking the paid email provider.
+    if (toolName.length > 120 || website.length > 2048 || audience.length > 500 || problem.length > 2000 || companyWebsite.length > 200) {
+      return new NextResponse("Submission fields are too long.", { status: 413 });
+    }
+
     // Website validation
     try {
       const parsedUrl = new URL(website);
 
       if (
-        parsedUrl.protocol !== "http:" &&
-        parsedUrl.protocol !== "https:"
+        !["http:", "https:"].includes(parsedUrl.protocol) ||
+        !parsedUrl.hostname ||
+        parsedUrl.username ||
+        parsedUrl.password
       ) {
         throw new Error("Invalid protocol");
       }
