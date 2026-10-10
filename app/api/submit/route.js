@@ -3,6 +3,12 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
+    // Reject oversized requests before parsing multipart form data.
+    const contentLength = Number(request.headers.get("content-length"));
+    if (Number.isFinite(contentLength) && contentLength > 16 * 1024) {
+      return new NextResponse("Submission is too large.", { status: 413 });
+    }
+
     const formData = await request.formData();
 
     const toolName = String(formData.get("toolName") || "").trim();
