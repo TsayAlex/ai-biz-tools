@@ -7,6 +7,20 @@ import { applyConsent, getSavedConsent, track, GA_MEASUREMENT_ID, CONSENT_STORAG
 
 const ACADEMY_ARRIVAL_PREFIX = "aibiztools:academy-arrival:";
 
+/**
+ * Preserve campaign attribution in GA4 without passing arbitrary query data
+ * (for example email addresses or form fields) to the analytics provider.
+ */
+function marketingPageLocation(pathname) {
+  const url = new URL(window.location.origin + pathname);
+  const incoming = new URLSearchParams(window.location.search);
+  for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "_gl", "gclid", "gbraid", "wbraid"]) {
+    const value = incoming.get(key);
+    if (value) url.searchParams.set(key, value);
+  }
+  return url.toString();
+}
+
 function academyLandingParams() {
   if (typeof window === "undefined") return null;
 
@@ -24,7 +38,7 @@ function academyLandingParams() {
 
   let source = read("utm_source");
   const academyReferrer = referrerDomain === "grand-florentine-193409.netlify.app";
-  const academySource = source === "academy_final_r1" || source === "alex_ai_academy" || source.startsWith("academy_");
+  const academySource = source === "academy_final_r1" || source === "alex_ai_academy" || source === "alex_academy" || source.startsWith("academy_");
 
   if (!academySource && !academyReferrer) return null;
   if (!source && academyReferrer) source = "academy_referrer";
@@ -71,7 +85,7 @@ export default function AnalyticsConsent() {
     if (choice !== "granted") return;
 
     track("page_view", {
-      page_location: window.location.origin + pathname,
+      page_location: marketingPageLocation(pathname),
       page_title: document.title,
       source: "navigation"
     });
