@@ -83,6 +83,27 @@ assert.equal(arrivals[0][2].handoff_format, 'hash_query');
 assert.equal(arrivals[0][2].linker_present, 0);
 assert.equal((await events('academy_arrival_unlinked')).length, 1);
 
+// Direct Academy-to-Canva campaign: detect UTM even if browser strips the Referrer.
+await page.goto(base + '/tools/canva?utm_source=alex_academy&utm_medium=referral&utm_campaign=academy_tools_20261013&utm_content=canva_lesson&email=private%40example.com');
+await page.waitForFunction(() => window.__aibiztoolsAnalyticsConsent === 'granted');
+await page.waitForTimeout(150);
+arrivals = await events('academy_arrival');
+assert.equal(arrivals.length, 1, 'the published Academy Canva campaign is recognized without a referrer');
+assert.equal(arrivals[0][2].source, 'alex_academy');
+assert.equal(arrivals[0][2].medium, 'referral');
+assert.equal(arrivals[0][2].campaign, 'academy_tools_20261013');
+assert.equal(arrivals[0][2].content, 'canva_lesson');
+assert.equal(arrivals[0][2].handoff_format, 'query');
+assert.equal((await events('academy_arrival_unlinked')).length, 1);
+const campaignPageView = (await events('page_view')).at(-1);
+assert.ok(campaignPageView[2].page_location.includes('/tools/canva?utm_source=alex_academy'));
+assert.ok(campaignPageView[2].page_location.includes('utm_campaign=academy_tools_20261013'));
+assert.ok(!campaignPageView[2].page_location.includes('private%40example.com'), 'unknown query fields must not reach GA4');
+await page.reload();
+await page.waitForFunction(() => window.__aibiztoolsAnalyticsConsent === 'granted');
+await page.waitForTimeout(150);
+assert.equal((await events('academy_arrival')).length, 0, 'Academy arrival is deduplicated on reload');
+
 // Another tab revoking consent must update the already-open page without consent events.
 const second = await context.newPage();
 await second.goto(base + '/');
