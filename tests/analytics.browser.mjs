@@ -104,6 +104,35 @@ await page.waitForFunction(() => window.__aibiztoolsAnalyticsConsent === 'grante
 await page.waitForTimeout(150);
 assert.equal((await events('academy_arrival')).length, 0, 'Academy arrival is deduplicated on reload');
 
+// Calculator conversion funnel: one meaningful interaction, then deliberate finder click.
+// Never send typed business values or trigger GA4 before consent.
+await page.goto(base + '/guides/ai-workflow-value-calculator');
+await page.waitForFunction(() => window.__aibiztoolsAnalyticsConsent === 'granted');
+await page.locator('.value-inputs input').first().waitFor();
+assert.equal((await events('calculator_engaged')).length, 0, 'initial calculator render is not engagement');
+await page.locator('.value-inputs input').first().fill('27');
+assert.equal((await events('calculator_engaged')).length, 1, 'one user edit counts as engagement');
+await page.locator('.value-inputs input').first().fill('29');
+assert.equal((await events('calculator_engaged')).length, 1, 'further edits do not inflate engagement');
+const calculatorEvent = (await events('calculator_engaged'))[0][2];
+assert.equal(calculatorEvent.source, 'workflow_value_calculator');
+assert.equal(calculatorEvent.site_product, 'ai_biz_tools');
+for (const sensitive of ['minutesPerTask','tasksPerWeek','hourlyValue','monthlyCost','savingPercent','values','27','29']) {
+  assert.equal(JSON.stringify(calculatorEvent).includes(sensitive), false, 'raw calculator input stays private');
+}
+await page.locator('.value-widget a[href="/#finder"]').evaluate(el => {
+  el.addEventListener('click', e => e.preventDefault(), { once: true });el.click();
+});
+assert.equal((await events('calculator_to_finder')).length, 1, 'real CTA click is measured');
+await page.getByRole('button', { name: 'Necessary only', exact: true }).click();
+await page.reload();
+await page.locator('.value-inputs input').first().fill('35');
+assert.equal((await events('calculator_engaged')).length, 0, 'denied consent means no engagement events');
+assert.equal((await events('calculator_to_finder')).length, 0, 'denied consent means no CTA events');
+// Restore consent for the existing cross-tab revocation test.
+await page.getByRole('button', { name: 'Allow analytics', exact: true }).click();
+await page.waitForFunction(() => window.__aibiztoolsAnalyticsConsent === 'granted');
+
 // Another tab revoking consent must update the already-open page without consent events.
 const second = await context.newPage();
 await second.goto(base + '/');
