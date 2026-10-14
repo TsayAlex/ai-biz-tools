@@ -4,7 +4,18 @@ import WorkflowValueCalculator from "../../../components/WorkflowValueCalculator
 export const metadata = {
   title: "Free AI workflow time-savings calculator for Irish small businesses",
   description: "Calculate a transparent, editable scenario for the time and software cost of a repetitive business task. Free, private, no signup.",
-  alternates: { canonical: "/guides/ai-workflow-value-calculator" }
+  alternates: { canonical: "/guides/ai-workflow-value-calculator" },
+  openGraph: {
+    title: "Free AI time-savings calculator for small businesses",
+    description: "Check a transparent time-saving scenario before paying for another tool. No signup. English, Russian and Ukrainian.",
+    url: "/guides/ai-workflow-value-calculator",
+    type: "website"
+  },
+  twitter: {
+    card: "summary",
+    title: "Free AI time-savings calculator for small businesses",
+    description: "Estimate hours freed and monthly software cost without registration or unrealistic promises."
+  }
 };
 
 export default function FreeWorkflowCalculator() {
