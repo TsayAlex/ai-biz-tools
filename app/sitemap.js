@@ -8,6 +8,7 @@ export default function sitemap() {
     { url: base, changeFrequency:"weekly", priority:1 },
     { url: `${base}/guides`, changeFrequency:"weekly", priority:.7 },
     { url: `${base}/guides/ai-workflow-value-calculator`, changeFrequency:"monthly", priority:.85 },
+    { url: `${base}/guides/automate-customer-enquiries-small-business`, changeFrequency:"monthly", priority:.8 },
     { url: `${base}/best/best-ai-tools-for-contractors`, changeFrequency:"monthly", priority:1 },
     { url: `${base}/best/best-ai-tools-for-restaurants`, changeFrequency:"monthly", priority:.9 },
     { url: `${base}/best/best-ai-tools-for-real-estate`, changeFrequency:"monthly", priority:.9 },
