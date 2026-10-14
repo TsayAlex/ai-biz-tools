@@ -1,8 +1,7 @@
 import Link from "next/link";
 import ToolExplorer from "../components/ToolExplorer";
 import ToolFinder from "../components/ToolFinder";
-import NewsletterForm from "../components/NewsletterForm";
-import { businesses } from "../data/tools";
+import { businesses, tools } from "../data/tools";
 
 const tasks = [
   ["Marketing","Create campaigns, ads and social content"],
@@ -30,13 +29,13 @@ export default function Home() {
             <span>✓ Explainable matches</span>
             <span>✓ No fake testimonials</span>
           </div>
-          <p className="hero-proof">Use the finder on the right for a shortlist, or browse our reviewed tools below.</p>
+          <p className="hero-proof">Use the finder on the right for a shortlist, or browse our reviewed tools below.</p><p><Link href="/guides/ai-workflow-value-calculator">Free AI time-saving calculator for small businesses →</Link></p>
         </div>
         <ToolFinder />
       </section>
 
       <section className="stats">
-        <div><strong>12</strong><span>reviewed starter tools</span></div>
+        <div><strong>{tools.length}</strong><span>tools in directory</span></div>
         <div><strong>7</strong><span>business types</span></div>
         <div><strong>6</strong><span>core tasks</span></div>
         <div><strong>3</strong><span>personalized matches</span></div>
@@ -83,13 +82,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="newsletter" className="section newsletter">
+      <section id="workflow-value" className="section newsletter">
         <div>
-          <span className="eyebrow">SMALL BUSINESS AI BRIEF</span>
-          <h2>One useful AI workflow each week.</h2>
-          <p>The form is UI-only in this prototype. Connect an email provider before launch.</p>
+          <span className="eyebrow">FREE BUSINESS WORKFLOW TOOL</span>
+          <h2>Is an AI subscription worth it for your small business?</h2>
+          <p>Estimate possible hours freed and software cost with a transparent, private calculator. No signup, no email collection, no guaranteed savings.</p>
         </div>
-        <NewsletterForm />
+        <Link className="primary big" href="/guides/ai-workflow-value-calculator">Try the free calculator →</Link>
       </section>
     </main>
   );

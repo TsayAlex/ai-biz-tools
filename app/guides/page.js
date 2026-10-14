@@ -20,6 +20,12 @@ export default function Guides() {
         <h1>Use AI like a business tool, not a collection hobby</h1>
         <p>Short, practical guidance for testing tools against real work.</p>
       </section>
+      <section className="content-card wide">
+        <span className="eyebrow">FREE INTERACTIVE TOOL • EN / RU / UA</span>
+        <h2>Could one AI workflow be worth the subscription?</h2>
+        <p>Run your own private, editable time-savings scenario. No signup, and no guaranteed profit claims.</p>
+        <Link className="primary inline" href="/guides/ai-workflow-value-calculator">Try the workflow value calculator →</Link>
+      </section>
       <section className="guide-list">
         {guides.map(([t,d],i)=><article className="guide-card" key={t}><span>0{i+1}</span><div><h2>{t}</h2><p>{d}</p></div></article>)}
       </section>
