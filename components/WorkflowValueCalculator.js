@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { track } from "../lib/analytics";
 import { calculateWorkflowValue } from "../lib/workflowValue";
 
 const words = {
@@ -51,6 +52,20 @@ const inputs = [
 
 export default function WorkflowValueCalculator() {
   const [language, setLanguage] = useState("en");
+  const engagementTracked = useRef(false);
+
+  function changeValue(key, value) {
+    // Consent-aware and once per mounted page. Never send the entered numbers.
+    if (!engagementTracked.current && track("calculator_engaged", { source: "workflow_value_calculator" })) {
+      engagementTracked.current = true;
+    }
+    setValues(prev => ({ ...prev, [key]: value }));
+  }
+
+  function goToFinder() {
+    // An actual button click, not an assumed conversion or a page view.
+    track("calculator_to_finder", { source: "workflow_value_calculator" });
+  }
   const [values, setValues] = useState({ minutesPerTask: 20, tasksPerWeek: 15, savingPercent: 50, hourlyValue: 20, monthlyCost: 15 });
   const t = words[language];
   const result = calculateWorkflowValue(values);
@@ -73,7 +88,7 @@ export default function WorkflowValueCalculator() {
         <span>{t[label]}</span>
         <input type="number" inputMode="decimal" min={min} max={max} step={step}
           value={values[key]}
-          onChange={e => setValues(prev => ({ ...prev, [key]: e.target.value }))} />
+          onChange={e => changeValue(key, e.target.value)} />
       </label>)}
     </div>
     <h2>{t.results}</h2>
@@ -86,6 +101,6 @@ export default function WorkflowValueCalculator() {
     {result.netValue < 0 && <p className="value-note">{t.sign}</p>}
     <p className="value-warning">{t.warning}</p>
     <p className="value-privacy">{t.privacy}</p>
-    <a className="primary big" href="/#finder">{t.action}</a>
+    <a className="primary big" href="/#finder" onClick={goToFinder}>{t.action}</a>
   </section>;
 }

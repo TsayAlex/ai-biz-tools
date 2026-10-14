@@ -45,6 +45,14 @@ The finder is intentionally simple and explainable. It ranks the existing curate
 
 This is a better launch-stage choice than adding an LLM API before the site has traffic or validated demand.
 
+## Calculator usage signals (no added cookies or personal data)
+
+The free workflow value calculator uses the existing consent-aware GA4 helper:
+- `calculator_engaged`: sent on the **first actual input change on the page**, only when the user has granted analytics. No event on initial display, and no duplicate event on subsequent edits in the same page visit.
+- `calculator_to_finder`: sent only when a visitor actually selects the link to the three-question tool finder, and only with analytics consent.
+
+Both events set only `source: workflow_value_calculator` plus the established site/measurement IDs. Entered time, costs, prices, savings and other input values remain in the browser and are never included in the event payload. A visitor who denies analytics creates neither event. They are product-interest signals, **not proof of a real lead, a sale or paid revenue**. Browser smoke tests stub Google analytics endpoints so QA does not create fake traffic.
+
 ## Analytics and consent
 
 GA4 uses the single measurement ID `G-RWBTJRK4H5`. Google tag loading and
