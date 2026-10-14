@@ -26,6 +26,12 @@ export default function Guides() {
         <p>Run your own private, editable time-savings scenario. No signup, and no guaranteed profit claims.</p>
         <Link className="primary inline" href="/guides/ai-workflow-value-calculator">Try the workflow value calculator →</Link>
       </section>
+      <section className="content-card wide">
+        <span className="eyebrow">REAL-WORLD TWO-WEEK PLAN • FREE</span>
+        <h2>How to test AI for customer enquiries without risking trust</h2>
+        <p>A step-by-step experiment: measure a manual baseline, draft one safe template, have a person check each reply and compare the actual result. Includes privacy reminders and a link to our free calculator.</p>
+        <Link className="primary inline" href="/guides/automate-customer-enquiries-small-business">Read the two-week guide →</Link>
+      </section>
       <section className="guide-list">
         {guides.map(([t,d],i)=><article className="guide-card" key={t}><span>0{i+1}</span><div><h2>{t}</h2><p>{d}</p></div></article>)}
       </section>
