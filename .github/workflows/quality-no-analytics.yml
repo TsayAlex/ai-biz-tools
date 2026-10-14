@@ -1,0 +1,27 @@
+name: AI Biz Tools - Offline QA
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Unit tests only - no GA4 visits
+        run: npm run test:unit
+      - name: Verify production build - no synthetic website sessions
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
