@@ -2,7 +2,8 @@ import Link from "next/link";
 
 export const metadata = {
   title:"AI guides for small business",
-  description:"Practical guides for choosing and using AI tools in a small business."
+  description:"Practical guides for choosing and using AI tools in a small business.",
+  alternates: { canonical: "/guides" }
 };
 
 const guides = [
