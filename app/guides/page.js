@@ -2,7 +2,13 @@ import Link from "next/link";
 
 export const metadata = {
   title:"AI guides for small business",
-  description:"Practical guides for choosing and using AI tools in a small business."
+  description:"Practical, free small-business AI guides: compare subscriptions, calculate workflow value and test customer-enquiry automation with human review.",
+  openGraph: {
+    title: "Practical AI Guides for Small Business",
+    description: "Free guides to evaluate AI subscriptions, estimate workflow value and safely test customer-enquiry automation.",
+    url: "/guides",
+    type: "website"
+  }
 };
 
 const guides = [
