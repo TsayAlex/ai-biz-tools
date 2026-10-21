@@ -1,6 +1,6 @@
 import VendorLink from "../../../components/VendorLink";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { comparisons, getComparison, getTool } from "../../../data/tools";
 
 export function generateStaticParams() {
@@ -10,10 +10,12 @@ export function generateStaticParams() {
 export function generateMetadata({ params }) {
   const c = getComparison(params.slug);
   if (!c) return {};
+  if (params.slug === "chatgpt-vs-claude") return { alternates: { canonical: "/compare/chatgpt-vs-claude-for-small-business" } };
   return { title:c.title, description:c.intro, alternates:{canonical:`/compare/${c.slug}`} };
 }
 
 export default function ComparePage({ params }) {
+  if (params.slug === "chatgpt-vs-claude") permanentRedirect("/compare/chatgpt-vs-claude-for-small-business");
   const c = getComparison(params.slug);
   if (!c) notFound();
   const a = getTool(c.a), b = getTool(c.b);

@@ -6,6 +6,7 @@ export default function sitemap() {
   const base = siteConfig.url.replace(/\/$/, "");
   const entries = [
     { url: base, changeFrequency:"weekly", priority:1 },
+    { url: `${base}/compare`, changeFrequency:"monthly", priority:.7 },
     { url: `${base}/guides`, changeFrequency:"weekly", priority:.7 },
     { url: `${base}/guides/ai-workflow-value-calculator`, changeFrequency:"monthly", priority:.85 },
     { url: `${base}/guides/automate-customer-enquiries-small-business`, changeFrequency:"monthly", priority:.8 },
@@ -23,7 +24,7 @@ export default function sitemap() {
     { url: `${base}/submit`, changeFrequency:"monthly", priority:.3 },
     ...tools.map(x=>({url:`${base}/tools/${x.slug}`,changeFrequency:"monthly",priority:.8})),
     ...businesses.map(x=>({url:`${base}/business/${x.slug}`,changeFrequency:"monthly",priority:.9})),
-    ...comparisons.map(x=>({url:`${base}/compare/${x.slug}`,changeFrequency:"monthly",priority:.8})),
+    ...comparisons.filter(x => x.slug !== "chatgpt-vs-claude").map(x=>({url:`${base}/compare/${x.slug}`,changeFrequency:"monthly",priority:.8})),
     ...seoPages.map(x=>({url:`${base}/best/${x.slug}`,changeFrequency:"monthly",priority:.9}))
   ];
 

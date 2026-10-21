@@ -74,10 +74,10 @@ export default function Home() {
           <span className="eyebrow">COMPARE BEFORE YOU BUY</span>
           <h2>Do not pay for overlapping tools</h2>
           <p>Comparison pages focus on the job each product does, who benefits, and where the tools overlap.</p>
-          <Link className="primary inline" href="/compare/chatgpt-vs-claude">Compare ChatGPT vs Claude →</Link>
+          <Link className="primary inline" href="/compare/chatgpt-vs-claude-for-small-business">Compare ChatGPT vs Claude →</Link>
         </div>
         <div className="compare-box">
-          <Link href="/compare/chatgpt-vs-claude"><b>ChatGPT</b><span>vs</span><b>Claude</b></Link>
+          <Link href="/compare/chatgpt-vs-claude-for-small-business"><b>ChatGPT</b><span>vs</span><b>Claude</b></Link>
           <Link href="/compare/zapier-vs-chatgpt"><b>Zapier</b><span>vs</span><b>ChatGPT</b></Link>
         </div>
       </section>

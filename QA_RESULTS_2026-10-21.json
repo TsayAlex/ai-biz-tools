@@ -1,0 +1,33 @@
+{
+  "unit_tests": "13/13 passed",
+  "production_build": "passed; 71 pages generated",
+  "checks": [
+    {
+      "route": "/compare",
+      "status": 200,
+      "location": null
+    },
+    {
+      "route": "/compare/chatgpt-vs-claude-for-small-business",
+      "status": 200,
+      "location": null,
+      "title": "ChatGPT vs Claude for Small Business | AI Biz Tools"
+    },
+    {
+      "route": "/compare/chatgpt-vs-claude",
+      "status": 308,
+      "location": "/compare/chatgpt-vs-claude-for-small-business"
+    },
+    {
+      "route": "/sitemap.xml",
+      "status": 200,
+      "location": null
+    },
+    {
+      "route": "/affiliate-disclosure",
+      "status": 200,
+      "location": null
+    }
+  ],
+  "scope": "Local HTTP only; no JavaScript executed, no GA4 sessions generated"
+}

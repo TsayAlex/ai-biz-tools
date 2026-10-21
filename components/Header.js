@@ -7,7 +7,7 @@ export default function Header() {
       <nav aria-label="Primary navigation">
         <Link href="/#explore">Tools</Link>
         <Link href="/#business">By Business</Link>
-        <Link href="/compare/chatgpt-vs-claude">Compare</Link>
+        <Link href="/compare">Compare</Link>
         <Link href="/guides">Guides</Link>
         <Link href="/methodology">Methodology</Link>
       </nav>

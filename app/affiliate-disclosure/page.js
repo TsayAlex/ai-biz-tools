@@ -2,7 +2,7 @@ export const metadata = { title:"Affiliate disclosure", description:"AI Biz Tool
 
 export default function Disclosure() {
   return <main className="detail-page">
-    <section className="business-hero"><span className="eyebrow">DISCLOSURE</span><h1>Affiliate relationships and editorial independence</h1><p>Some outbound links may generate a commission if a reader later purchases a product. When affiliate links are introduced, they should be disclosed clearly.</p></section>
+    <section className="business-hero"><span className="eyebrow">DISCLOSURE</span><h1>Affiliate relationships and editorial independence</h1><p>Some outbound links may generate a commission if a reader later purchases a product. This site includes referral or affiliate links, including links for QuoteIQ, ElevenLabs and Krisp. Their presence does not guarantee that a commission will be paid. Program eligibility and commission approval are determined by the providers.</p></section>
     <section className="content-card wide"><h2>Our rule</h2><p>A commercial relationship should not determine whether a product is included, its score, or its position in a recommendation list. Sponsored placements, if used, should be labelled as sponsored rather than presented as independent editorial recommendations.</p><p>Readers should verify current pricing, features, contract terms and suitability directly with the vendor before purchasing.</p></section>
   </main>;
 }

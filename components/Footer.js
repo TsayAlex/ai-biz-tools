@@ -12,7 +12,7 @@ export default function Footer() {
           <b>Discover</b>
           <Link href="/#explore">AI Tools</Link>
           <Link href="/#business">By Business</Link>
-          <Link href="/compare/chatgpt-vs-claude">Comparisons</Link>
+          <Link href="/compare">Comparisons</Link>
           <Link href="/guides">Guides</Link>
         </div>
         <div>
@@ -31,7 +31,7 @@ export default function Footer() {
         </div>
       </footer>
       <div className="disclosure">
-        Some links may become affiliate links. Commercial relationships do not determine editorial rankings. Verify vendor pricing and features before purchase.
+        Some links are referral or affiliate links. We may earn a commission from qualifying purchases. Commercial relationships do not determine editorial rankings. Verify vendor pricing and features before purchase.
       </div>
     </>
   );

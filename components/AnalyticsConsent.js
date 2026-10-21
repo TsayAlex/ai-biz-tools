@@ -148,12 +148,16 @@ export default function AnalyticsConsent() {
     />}
     <section className="analytics-consent" aria-label="Analytics preferences">
       <div className="analytics-consent-heading">
-        <strong aria-live="polite">GA4: {choice === "granted" ? "ON" : "OFF"}</strong>
+        <strong aria-live="polite">Analytics: {choice === "granted" ? "allowed" : "optional"}</strong>
         <span>Google Analytics is optional. Advertising consent stays off.</span>
       </div>
       <div className="analytics-consent-actions">
         <button type="button" className="secondary" aria-pressed={choice === "granted"} onClick={() => choose("granted")}>Allow analytics</button>
         <button type="button" className="secondary" aria-pressed={choice === "denied"} onClick={() => choose("denied")}>Necessary only</button>
+        <a href="/privacy">Privacy policy</a>
+      </div>
+      <details>
+        <summary>Analytics diagnostics</summary>
         <button type="button" className="secondary" disabled={choice !== "granted"} onClick={() => {
           if (track("analytics_test", {
             source: "consent_ui",
@@ -161,12 +165,9 @@ export default function AnalyticsConsent() {
             debug_mode: true
           })) setNotice("analytics_test queued for GA4 DebugView/Realtime. If it does not appear, check the Google tag status below.");
         }}>Test analytics</button>
-        <a href="/privacy">Privacy policy</a>
-      </div>
-      <small>
-        GA4 status reflects consent. Google tag status: {tagStatus}. Vercel Analytics remains enabled.
-      </small>
-      {notice && <p role="status">{notice}</p>}
+        <small>Google tag status: {tagStatus}. Vercel Analytics remains enabled.</small>
+        {notice && <p role="status">{notice}</p>}
+      </details>
     </section>
   </>;
 }
