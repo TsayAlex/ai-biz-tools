@@ -1,14 +1,11 @@
 ﻿import { Resend } from "resend";
 import { NextResponse } from "next/server";
-import { isOversizedDeclaredBody, validateSubmissionFields } from "../../../lib/submitValidation.js";
+import { readBoundedFormData, SubmissionTooLargeError, InvalidSubmissionBodyError, validateSubmissionFields } from "../../../lib/submitValidation.js";
 
 
 export async function POST(request) {
   try {
-    if (isOversizedDeclaredBody(request.headers.get("content-length"))) {
-      return new NextResponse("Submission is too large.", { status: 413 });
-    }
-    const formData = await request.formData();
+    const formData = await readBoundedFormData(request);
 
     const toolName = String(formData.get("toolName") || "").trim();
     const website = String(formData.get("website") || "").trim();
@@ -78,6 +75,10 @@ ${problem}
       303
     );
   } catch (error) {
+    if (error instanceof SubmissionTooLargeError)
+      return new NextResponse("Submission is too large.", { status: 413 });
+    if (error instanceof InvalidSubmissionBodyError)
+      return new NextResponse("Invalid form body.", { status: 400 });
     console.error("Submission error:", error);
 
     return new NextResponse(
