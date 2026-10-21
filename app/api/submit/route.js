@@ -1,8 +1,13 @@
 ﻿import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import { isOversizedDeclaredBody, validateSubmissionFields } from "../../../lib/submitValidation.js";
+
 
 export async function POST(request) {
   try {
+    if (isOversizedDeclaredBody(request.headers.get("content-length"))) {
+      return new NextResponse("Submission is too large.", { status: 413 });
+    }
     const formData = await request.formData();
 
     const toolName = String(formData.get("toolName") || "").trim();
@@ -22,29 +27,9 @@ export async function POST(request) {
       );
     }
 
-    // Required fields
-    if (!toolName || !website || !audience || !problem) {
-      return new NextResponse(
-        "Please complete all required fields.",
-        { status: 400 }
-      );
-    }
-
-    // Website validation
-    try {
-      const parsedUrl = new URL(website);
-
-      if (
-        parsedUrl.protocol !== "http:" &&
-        parsedUrl.protocol !== "https:"
-      ) {
-        throw new Error("Invalid protocol");
-      }
-    } catch {
-      return new NextResponse(
-        "Please enter a valid website URL.",
-        { status: 400 }
-      );
+    const validationError = validateSubmissionFields({toolName, website, audience, problem});
+    if (validationError) {
+      return new NextResponse(validationError.message, { status: validationError.status });
     }
 
     if (!process.env.RESEND_API_KEY || !process.env.SUBMISSIONS_TO) {

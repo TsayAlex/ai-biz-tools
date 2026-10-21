@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test:unit": "node --test tests/analytics.test.mjs tests/workflow-value.test.mjs"
+    "test:unit": "node --test tests/analytics.test.mjs tests/workflow-value.test.mjs tests/submit-validation.test.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
