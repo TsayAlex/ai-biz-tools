@@ -1,3 +1,4 @@
+import ComparisonNextSteps from "../../../components/ComparisonNextSteps";
 import VendorLink from "../../../components/VendorLink";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
@@ -55,6 +56,8 @@ export default function ComparePage({ params }) {
         <h2>Run a fair test before choosing</h2>
         <p>Use the same three real business tasks in both products. Record setup time, correction time, output quality and whether the tool replaces anything you already pay for. A better score on a generic benchmark matters less than a better result in your actual workflow.</p>
       </section>
+
+      <ComparisonNextSteps comparison={c.slug} />
 
       <section className="cta-panel">
         <div><span className="eyebrow">NEXT STEP</span><h2>Read the full reviews before committing.</h2></div>

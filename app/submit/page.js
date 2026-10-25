@@ -1,3 +1,5 @@
+import TrackedSubmissionForm from "../../components/TrackedSubmissionForm";
+
 export const metadata = {
   title: "Submit an AI tool"
 };
@@ -17,7 +19,7 @@ export default function Submit() {
       </section>
 
       <section className="form-card">
-        <form action="/api/submit" method="POST">
+        <TrackedSubmissionForm>
           <label>
             Tool name
             <input
@@ -77,7 +79,7 @@ export default function Submit() {
             Submissions are reviewed manually. Submission does not guarantee
             inclusion in AI Biz Tools.
           </small>
-        </form>
+        </TrackedSubmissionForm>
       </section>
     </main>
   );

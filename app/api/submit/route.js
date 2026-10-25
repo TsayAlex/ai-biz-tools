@@ -1,4 +1,4 @@
-﻿import { Resend } from "resend";
+import { Resend } from "resend";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
@@ -14,8 +14,11 @@ export async function POST(request) {
       formData.get("companyWebsite") || ""
     ).trim();
 
+    const wantsJson = request.headers.get("accept")?.includes("application/json");
+
     // Honeypot spam protection
     if (companyWebsite) {
+      if (wantsJson) return NextResponse.json({ accepted: false }, { status: 200 });
       return NextResponse.redirect(
         new URL("/submit/thanks", request.url),
         303
@@ -58,7 +61,7 @@ export async function POST(request) {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const { error } = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: "AI Biz Tools <onboarding@resend.dev>",
       to: process.env.SUBMISSIONS_TO,
       subject: `New AI tool submission: ${toolName}`,
@@ -79,7 +82,7 @@ ${problem}
       `
     });
 
-    if (error) {
+    if (error || !data?.id) {
       console.error("Resend error:", error);
 
       return new NextResponse(
@@ -87,6 +90,8 @@ ${problem}
         { status: 500 }
       );
     }
+
+    if (wantsJson) return NextResponse.json({ accepted: true });
 
     return NextResponse.redirect(
       new URL("/submit/thanks", request.url),
