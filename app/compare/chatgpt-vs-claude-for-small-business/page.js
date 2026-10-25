@@ -1,3 +1,4 @@
+import ComparisonNextSteps from "../../../components/ComparisonNextSteps";
 import Link from "next/link";
 const title="ChatGPT vs Claude for Small Business";
 const description="Compare ChatGPT and Claude for small-business writing, documents, research, team use and buying decisions.";
@@ -20,4 +21,5 @@ export default function Page(){return <main className="detail-page">
 <section className="notice"><b>Important:</b> Model availability, usage limits and pricing change frequently. Verify current vendor pages before purchase. Rankings are editorial and are not based on commissions.</section>
 <section className="content-card wide"><h2>Official pricing and plan details</h2><p>Prices, model access and limits can change. These are vendor links, not a claim that we have tested every plan.</p><ul><li><a href="https://openai.com/chatgpt/pricing/" target="_blank" rel="noopener noreferrer">ChatGPT pricing and plans</a></li><li><a href="https://claude.com/pricing" target="_blank" rel="noopener noreferrer">Claude pricing and plans</a></li></ul><Link href="/guides/ai-workflow-value-calculator">Estimate subscription value with our free calculator →</Link></section>
 <section className="final-cta"><h2>Need tools beyond general assistants?</h2><p>Use the Finder to match your business and task to a short list.</p><Link className="primary big" href="/#finder">Find my 3 tools →</Link></section>
+<ComparisonNextSteps comparison="chatgpt-vs-claude-for-small-business" />
 </main>}
